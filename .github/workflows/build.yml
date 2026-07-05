@@ -36,8 +36,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'microsoft'
+          java-version: '25'
+          distribution: 'temurin'
 
       - name: Set Minecraft Version
         run: ./gradlew "Set active project to ${{ matrix.minecraftVersion }}"

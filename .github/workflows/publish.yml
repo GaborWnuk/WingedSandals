@@ -39,8 +39,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'microsoft'
+          java-version: '25'
+          distribution: 'temurin'
 
       - name: Set Minecraft Version
         run: ./gradlew "Set active project to ${{ matrix.minecraftVersion }}"
@@ -64,86 +64,18 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - name: publish 1.20.x
-        if: matrix.minecraftVersion == '1.20.1'
+      - name: publish 26.1.2
+        if: matrix.minecraftVersion == '26.1.2'
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          name: WingedSandals ${{ github.ref_name }} for Minecraft 1.20.x
+          name: WingedSandals ${{ github.ref_name }} for Minecraft 26.1
           changelog: ${{ steps.changelog.outputs.changelog }}
           files: |
             versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
           game-versions: |
-            >=1.20 <1.21
+            >=26.1.2 <26.2
           java: |
-            17
-          modrinth-id: ${{ env.MODRINTH_ID }}
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: ${{ env.CURSEFORGE_ID }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-      - name: publish 1.21-1.21.1
-        if: matrix.minecraftVersion == '1.21.1'
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          name: WingedSandals ${{ github.ref_name }} for Minecraft 1.21-1.21.1
-          changelog: ${{ steps.changelog.outputs.changelog }}
-          files: |
-            versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
-          game-versions: |
-            >=1.21 <1.21.2
-          java: |
-            21
-          modrinth-id: ${{ env.MODRINTH_ID }}
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: ${{ env.CURSEFORGE_ID }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-      - name: publish 1.21.2-1.21.3
-        if: matrix.minecraftVersion == '1.21.2'
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          name: WingedSandals ${{ github.ref_name }} for Minecraft 1.21.2-1.21.3
-          changelog: ${{ steps.changelog.outputs.changelog }}
-          files: |
-            versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
-          game-versions: |
-            >=1.21.2 <1.21.4
-          java: |
-            21
-          modrinth-id: ${{ env.MODRINTH_ID }}
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: ${{ env.CURSEFORGE_ID }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-      - name: publish 1.21.4
-        if: matrix.minecraftVersion == '1.21.4'
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          name: WingedSandals ${{ github.ref_name }} for Minecraft 1.21.4
-          changelog: ${{ steps.changelog.outputs.changelog }}
-          files: |
-            versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
-          game-versions: |
-            >=1.21.4 <1.21.5
-          java: |
-            21
-          modrinth-id: ${{ env.MODRINTH_ID }}
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: ${{ env.CURSEFORGE_ID }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-      - name: publish 1.21.5
-        if: matrix.minecraftVersion == '1.21.5'
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          name: WingedSandals ${{ github.ref_name }} for Minecraft 1.21.5
-          changelog: ${{ steps.changelog.outputs.changelog }}
-          files: |
-            versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
-          game-versions: |
-            >=1.21.5 <1.22
-          java: |
-            21
+            25
           modrinth-id: ${{ env.MODRINTH_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-id: ${{ env.CURSEFORGE_ID }}
