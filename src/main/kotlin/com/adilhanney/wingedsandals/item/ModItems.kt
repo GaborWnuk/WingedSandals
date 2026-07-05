@@ -1,53 +1,41 @@
 package com.adilhanney.wingedsandals.item
 
 import com.adilhanney.wingedsandals.WingedSandals
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
-import net.minecraft.item.Item
-import net.minecraft.item.ItemGroups
-import net.minecraft.item.Items
-//? if >=1.21.2
-/*import net.minecraft.item.equipment.EquipmentType*/
-//? if <1.21.2
-import net.minecraft.item.ArmorItem
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.util.Identifier
-import net.minecraft.util.Rarity
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.CreativeModeTabs
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.equipment.ArmorType
 
 object ModItems {
-  val wingedSandals = register("winged_sandals", ::WingedSandalsItem,
-    Item.Settings()
+  val wingedSandals: Item = register("winged_sandals", ::WingedSandalsItem,
+    Item.Properties()
       .rarity(Rarity.UNCOMMON)
-      //? if >=1.21.2 {
-      /*.maxDamage(EquipmentType.BOOTS.getMaxDamage(7))
-      *///?} else if >=1.21 {
-      /*.maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(7))
-      *///?}
+      .durability(ArmorType.BOOTS.getDurability(7))
   )
 
-  private fun register(name: String?, itemFactory: (Item.Settings) -> Item, settings: Item.Settings): Item {
+  private fun register(name: String, itemFactory: (Item.Properties) -> Item, properties: Item.Properties): Item {
     val registryKey =
-      RegistryKey.of(RegistryKeys.ITEM, Identifier.of(WingedSandals.MOD_ID, name))
+      ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(WingedSandals.MOD_ID, name))
 
-    //? if >=1.21.2 {
-    /*settings.registryKey(registryKey)
-    return Items.register(registryKey, itemFactory, settings)
-    *///?} else {
-    return Items.register(registryKey, itemFactory(settings))
-    //?}
+    return Registry.register(BuiltInRegistries.ITEM, registryKey, itemFactory(properties.setId(registryKey)))
   }
 
   fun registerItems() {
     WingedSandals.logger.info("Registering Items for " + WingedSandals.MOD_ID)
 
-    ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModifyEntries { entries ->
-      entries.add(wingedSandals)
-    })
+    CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register { output ->
+      output.accept(wingedSandals)
+    }
 
     ServerTickEvents.END_SERVER_TICK.register {
-      for (player in it.playerManager.playerList) {
+      for (player in it.playerList.players) {
         WingedSandalsItem.setAllowFlying(player)
       }
     }
