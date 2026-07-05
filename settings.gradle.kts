@@ -3,16 +3,20 @@ pluginManagement {
 		maven("https://maven.fabricmc.net/")
 		mavenCentral()
 		gradlePluginPortal()
+		maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
+		maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
 	}
 }
 
 plugins {
-	id("dev.kikugie.stonecutter") version "0.6"
+	id("dev.kikugie.stonecutter") version "0.9.6"
+	// Lets Gradle auto-provision the JDK required by gradle/gradle-daemon-jvm.properties
+	id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 stonecutter {
 	create(rootProject) {
-		versions("1.20.1", "1.20.5", "1.21.1", "1.21.2", "1.21.4", "1.21.5")
-		vcsVersion = "1.20.1"
+		versions("26.1.2")
+		vcsVersion = "26.1.2"
 	}
 }
