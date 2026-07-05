@@ -1,3 +1,8 @@
+# v1.1.0
+
+- (Fabric) Updated to Minecraft 26.1.2
+- (Fabric) Support for Minecraft 1.20.x-1.21.x is now maintained on the `1.20.x-1.21.x` branch
+
 # v1.0.5
 
 - (Fabric) Fixed the player still being able to fly after the winged sandals break
