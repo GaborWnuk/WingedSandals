@@ -5,9 +5,8 @@ on:
     tags:
       - '**'
 
-env:
-  MODRINTH_ID: 8gdV1Har
-  CURSEFORGE_ID: 1260304
+permissions:
+  contents: write
 
 jobs:
   find_versions:
@@ -64,19 +63,13 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - name: publish 26.1.2
-        if: matrix.minecraftVersion == '26.1.2'
+      - name: publish to GitHub Releases
+        if: startsWith(github.ref, 'refs/tags/')
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          name: WingedSandals ${{ github.ref_name }} for Minecraft 26.1
+          name: WingedSandals ${{ github.ref_name }}
           changelog: ${{ steps.changelog.outputs.changelog }}
           files: |
             versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
-          game-versions: |
-            >=26.1.2 <26.2
-          java: |
-            25
-          modrinth-id: ${{ env.MODRINTH_ID }}
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: ${{ env.CURSEFORGE_ID }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-tag: ${{ github.ref_name }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
