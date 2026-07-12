@@ -1,6 +1,7 @@
 pluginManagement {
 	repositories {
 		maven("https://maven.fabricmc.net/")
+		maven("https://maven.neoforged.net/releases/") { name = "NeoForged" }
 		mavenCentral()
 		gradlePluginPortal()
 		maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
@@ -16,7 +17,15 @@ plugins {
 
 stonecutter {
 	create(rootProject) {
-		versions("26.1.2")
-		vcsVersion = "26.1.2"
+		/**
+		 * Creates version nodes for multiple loaders, named `versions/{project}-{loader}`,
+		 * each using the loader-specific `build.{loader}.gradle.kts` build script.
+		 */
+		fun match(project: String, vararg loaders: String, version: String = project) {
+			for (loader in loaders) version("$project-$loader", version).buildscript("build.$loader.gradle.kts")
+		}
+
+		match("26.1.2", "fabric", "neoforge")
+		vcsVersion = "26.1.2-fabric"
 	}
 }

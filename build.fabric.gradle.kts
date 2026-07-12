@@ -40,6 +40,8 @@ tasks {
 				"version" to inputs.properties["version"],
 			))
 		}
+
+		exclude("META-INF/neoforge.mods.toml")
 	}
 
 	jar {
