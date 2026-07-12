@@ -1,5 +1,6 @@
 package com.adilhanney.wingedsandals.datagen
 
+//? if fabric {
 import com.adilhanney.wingedsandals.item.ModItems
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
@@ -15,3 +16,4 @@ class ModModelProvider(output: FabricPackOutput) : FabricModelProvider(output) {
     generator.generateFlatItem(ModItems.wingedSandals, ModelTemplates.FLAT_ITEM)
   }
 }
+//?}

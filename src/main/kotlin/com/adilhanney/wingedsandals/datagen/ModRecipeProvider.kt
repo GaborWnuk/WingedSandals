@@ -1,5 +1,6 @@
 package com.adilhanney.wingedsandals.datagen
 
+//? if fabric {
 import com.adilhanney.wingedsandals.item.ModItems
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
@@ -27,3 +28,4 @@ class ModRecipeProvider(output: FabricPackOutput, registriesFuture: CompletableF
 
   override fun getName(): String = "WingedSandalsRecipeProvider"
 }
+//?}

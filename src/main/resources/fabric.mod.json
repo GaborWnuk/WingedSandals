@@ -21,7 +21,7 @@
 	"entrypoints": {
 		"main": [
 			{
-				"value": "com.adilhanney.wingedsandals.WingedSandals",
+				"value": "com.adilhanney.wingedsandals.WingedSandalsFabric",
 				"adapter": "kotlin"
 			}
 		],
