@@ -27,6 +27,8 @@ jobs:
       matrix:
         minecraftVersion: ${{ fromJson(needs.find_versions.outputs.minecraftVersions) }}
       fail-fast: false
+      # Serialize jobs so the release for the tag is created once, not raced
+      max-parallel: 1
     runs-on: ubuntu-latest
     needs: find_versions
     steps:

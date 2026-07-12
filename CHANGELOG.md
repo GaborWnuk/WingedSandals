@@ -1,3 +1,8 @@
+# v1.2.0
+
+- Added NeoForge support for Minecraft 26.1.2 (requires Kotlin for Forge)
+- Restructured into a multiloader project: one codebase builds both the Fabric and NeoForge jars
+
 # v1.1.0
 
 - (Fabric) Updated to Minecraft 26.1.2

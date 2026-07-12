@@ -25,14 +25,19 @@ Simply wear the winged sandals and double-jump to start flying!
 
 ## Supported versions
 
-| Minecraft        | Where                                                                              |
-| ---------------- | ---------------------------------------------------------------------------------- |
-| 26.1.2 or newer  | this fork (`main`) — tested on 26.1.2                                              |
-| 1.20 – 1.21.5    | [upstream releases](https://github.com/adil192/WingedSandals/releases) or the `1.20.x-1.21.x` branch |
+| Minecraft        | Loaders           | Where                                                                              |
+| ---------------- | ----------------- | ---------------------------------------------------------------------------------- |
+| 26.1.2 or newer  | Fabric, NeoForge  | this fork (`main`) — tested on 26.1.2                                              |
+| 1.20 – 1.21.5    | Fabric, NeoForge  | [upstream releases](https://github.com/adil192/WingedSandals/releases) or the `1.20.x-1.21.x` branch |
+
+Required companion mods:
+
+- **Fabric**: Fabric API and Fabric Language Kotlin
+- **NeoForge**: Kotlin for Forge
 
 Minecraft versions older than 26.1.2 are not supported by this fork: the mod
-declares `minecraft: ~26.1.2` and `java: >=25` in its metadata, so Fabric
-Loader will refuse to load it on older versions instead of crashing.
+declares a `26.1.2`+ version range in its metadata, so the loader will refuse
+to load it on older versions instead of crashing.
 
 ## What changed in the 26.1 update
 
@@ -47,10 +52,12 @@ nearly everything:
   `ResourceLocation`), `CreativeModeTabEvents.modifyOutputEvent` (formerly
   `ItemGroupEvents.modifyEntriesEvent`), direct `Registry.register` item
   registration, and the `FabricPackOutput` data-generation API.
-- **Multi-version setup**: Stonecutter 0.9 with a centralized
-  [`stonecutter.properties.toml`](stonecutter.properties.toml) instead of
-  per-version `gradle.properties`. Support for 1.20.x–1.21.x was moved to the
-  `1.20.x-1.21.x` branch.
+- **Multiloader setup**: Stonecutter 0.9 with a centralized
+  [`stonecutter.properties.toml`](stonecutter.properties.toml) and one
+  codebase for both loaders — `versions/26.1.2-fabric` and
+  `versions/26.1.2-neoforge` build from the same sources, with loader
+  differences behind Stonecutter conditionals. Support for 1.20.x–1.21.x was
+  moved to the `1.20.x-1.21.x` branch.
 - **Resources**: armor textures are plain files at the modern
   `textures/entity/equipment/humanoid/` path (the old symlink-based layout,
   which never worked well across Windows/WSL, is gone).
@@ -62,13 +69,16 @@ nearly everything:
 ./gradlew build
 ```
 
-The jar ends up in `versions/26.1.2/build/libs/`. Gradle provisions the
-required JDK 25 automatically (see `gradle/gradle-daemon-jvm.properties`).
+This builds both loaders; the jars end up in
+`versions/26.1.2-fabric/build/libs/` and `versions/26.1.2-neoforge/build/libs/`.
+Gradle provisions the required JDK 25 automatically (see
+`gradle/gradle-daemon-jvm.properties`).
 
-To regenerate data files (models, recipes, advancements):
+To regenerate data files (models, recipes, advancements — shared by both
+loaders):
 
 ```sh
-./gradlew :26.1.2:runDatagen
+./gradlew :26.1.2-fabric:runDatagen
 ```
 
 ## Credits
