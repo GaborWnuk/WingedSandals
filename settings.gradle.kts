@@ -1,6 +1,7 @@
 pluginManagement {
 	repositories {
 		maven("https://maven.fabricmc.net/")
+		maven("https://maven.neoforged.net/releases/") { name = "NeoForged" }
 		mavenCentral()
 		gradlePluginPortal()
 		maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
@@ -32,11 +33,11 @@ stonecutter {
 
 		match("1.20.1", "fabric")
 		match("1.20.5", "fabric")
-		match("1.21.1", "fabric")
-		match("1.21.2", "fabric")
-		match("1.21.4", "fabric")
-		match("1.21.5", "fabric")
-		match("26.1.2", "fabric")
+		match("1.21.1", "fabric", "neoforge")
+		match("1.21.3", "fabric", "neoforge")
+		match("1.21.4", "fabric", "neoforge")
+		match("1.21.5", "fabric", "neoforge")
+		match("26.1.2", "fabric", "neoforge")
 		vcsVersion = "26.1.2-fabric"
 	}
 }

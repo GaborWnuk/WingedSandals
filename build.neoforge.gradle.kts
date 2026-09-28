@@ -1,51 +1,72 @@
 plugins {
 	id("org.jetbrains.kotlin.jvm")
-	// Minecraft before 26.1 is obfuscated: remap it (and mod dependencies) to
-	// Mojang's official names so all targets share the same source names
-	id("net.fabricmc.fabric-loom-remap")
+	id("net.neoforged.moddev")
 }
 
 val javaVersion = JavaVersion.toVersion(property("deps.java")!!)
-val fabricApiVersion: String = sc.properties["deps.fabric_api"]
-val mcVersionRangeForFabric: String = sc.properties["mod.mc_compat"]
-val fabricLoaderMin: String = sc.properties["deps.fabric_loader_min"]
+val mcVersionRangeForNeoForge: String = sc.properties["mod.mc_compat"]
+val neoForgeVersionRange: String = sc.properties["deps.neo_compat"]
+val kotlinForForgeVersion: String = sc.properties["deps.kotlin_forge"]
 val armorTexturePath: String = sc.properties["mod.armor_texture"]
 val equipmentModelPath: String = sc.properties["mod.equipment_model"]
 
 version = "${property("mod.version")}+${property("mod.mc_label")}"
 
 base {
-	archivesName = "${property("mod.id")}-fabric"
+	archivesName = "${property("mod.id")}-neoforge"
 }
 
-fabricApi {
-	configureDataGeneration {
-		client = true
-	}
+repositories {
+	maven("https://thedarkcolour.github.io/KotlinForForge/") { name = "KotlinForForge" }
 }
 
 dependencies {
-	minecraft("com.mojang:minecraft:${sc.current.version}")
-	mappings(loom.officialMojangMappings())
-	modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
-	modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
-	modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.fabric_kotlin")}")
+	implementation("thedarkcolour:kotlinforforge-neoforge:$kotlinForForgeVersion")
+}
+
+neoForge {
+	version = sc.properties["deps.neo_loader"]
+
+	mods {
+		register("wingedsandals") {
+			sourceSet(sourceSets.main.get())
+		}
+	}
+
+	runs {
+		// Each target gets its own game folder, as their configs and worlds are not interchangeable
+		val runDirectory = rootProject.file("run/${project.name}")
+		register("client") {
+			client()
+			gameDirectory = runDirectory
+		}
+		register("server") {
+			server()
+			gameDirectory = runDirectory.resolve("server")
+		}
+	}
+}
+
+sourceSets.main {
+	// Data generation runs on the Fabric target; the output is plain vanilla
+	// JSON shared by both loaders.
+	resources.srcDir(rootProject.file("versions/${sc.current.version}-fabric/src/main/generated"))
 }
 
 tasks {
 	processResources {
-		inputs.property("java", javaVersion.majorVersion)
-		inputs.property("minecraftVersionRange", mcVersionRangeForFabric)
-		inputs.property("fabricLoaderMin", fabricLoaderMin)
+		inputs.property("minecraftVersionRange", mcVersionRangeForNeoForge)
+		inputs.property("neoForgeVersionRange", neoForgeVersionRange)
+		inputs.property("kotlinForForgeVersion", kotlinForForgeVersion)
 		inputs.property("version", project.version)
 		inputs.property("armorTexturePath", armorTexturePath)
 		inputs.property("equipmentModelPath", equipmentModelPath)
 
-		filesMatching("fabric.mod.json") {
+		filesMatching("META-INF/neoforge.mods.toml") {
 			expand(mapOf(
-				"java" to inputs.properties["java"],
 				"minecraftVersionRange" to inputs.properties["minecraftVersionRange"],
-				"fabricLoaderMin" to inputs.properties["fabricLoaderMin"],
+				"neoForgeVersionRange" to inputs.properties["neoForgeVersionRange"],
+				"kotlinForForgeVersion" to inputs.properties["kotlinForForgeVersion"],
 				"version" to inputs.properties["version"],
 			))
 		}
@@ -59,7 +80,11 @@ tasks {
 			path = equipmentModelPath
 		}
 
-		exclude("META-INF/neoforge.mods.toml")
+		exclude("fabric.mod.json")
+	}
+
+	named("createMinecraftArtifacts") {
+		dependsOn("stonecutterGenerate")
 	}
 
 	jar {
@@ -87,16 +112,5 @@ java {
 
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(javaVersion.majorVersion)
-	}
-}
-
-loom {
-	runConfigs.all {
-		generateRunConfig = true // Run configurations are not created for subprojects by default
-		// Each target gets its own game folder, as their configs and worlds are not interchangeable
-		runDirectory = rootProject.file("run/${project.name}")
-	}
-	runConfigs.named("server") {
-		runDirectory = rootProject.file("run/${project.name}/server")
 	}
 }

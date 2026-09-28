@@ -1,0 +1,32 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[${kotlinForForgeVersion},)"
+license = "MIT"
+
+[[mods]]
+modId = "wingedsandals"
+version = "${version}"
+displayName = "WingedSandals"
+logoFile = "assets/wingedsandals/icon.png"
+authors = "adil192"
+description = '''Special boots that give you creative-style flight'''
+
+[[dependencies.wingedsandals]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neoForgeVersionRange}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.wingedsandals]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraftVersionRange}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.wingedsandals]]
+modId = "kotlinforforge"
+type = "required"
+versionRange = "[${kotlinForForgeVersion},)"
+ordering = "NONE"
+side = "BOTH"

@@ -13,10 +13,16 @@ import net.minecraft.world.item.ArmorMaterials
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.equipment.EquipmentAssets
 //?}
-//? if >=1.20.5 && <1.21.2 {
+//? if >=1.20.5 && <1.21.2 && fabric {
 /*import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
+*///?}
+//? if >=1.20.5 && <1.21.2 && neoforge {
+/*import net.minecraft.core.Holder
+import net.minecraft.core.registries.Registries
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.registries.DeferredRegister
 *///?}
 //? if <1.21.2 {
 /*import net.minecraft.world.item.Items
@@ -66,9 +72,19 @@ object ModArmorMaterials {
     gold.toughness(),
     netherite.knockbackResistance(),
   )
-
-  val wingedSandalsMaterial: Holder<ArmorMaterial> =
+  *///?}
+  //? if >=1.20.5 && <1.21.2 && fabric {
+  /*val wingedSandalsMaterial: Holder<ArmorMaterial> =
     Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, WingedSandals.id(NAME), material)
+  *///?}
+  //? if >=1.20.5 && <1.21.2 && neoforge {
+  /*private val armorMaterials = DeferredRegister.create(Registries.ARMOR_MATERIAL, WingedSandals.MOD_ID)
+
+  val wingedSandalsMaterial: Holder<ArmorMaterial> = armorMaterials.register(NAME) { -> material }
+
+  fun register(modEventBus: IEventBus) {
+    armorMaterials.register(modEventBus)
+  }
   *///?}
 
   //? if <1.20.5 {

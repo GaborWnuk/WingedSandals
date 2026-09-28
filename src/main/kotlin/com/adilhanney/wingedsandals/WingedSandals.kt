@@ -1,7 +1,5 @@
 package com.adilhanney.wingedsandals
 
-import com.adilhanney.wingedsandals.item.ModItems
-import net.fabricmc.api.ModInitializer
 //? if >=26.1 {
 import net.minecraft.resources.Identifier
 //?} else {
@@ -9,14 +7,10 @@ import net.minecraft.resources.Identifier
 *///?}
 import org.slf4j.LoggerFactory
 
-object WingedSandals : ModInitializer {
+/** Loader-independent mod constants. */
+object WingedSandals {
   const val MOD_ID = "wingedsandals"
   val logger = LoggerFactory.getLogger(MOD_ID)!!
-
-  override fun onInitialize() {
-    logger.info("Hello Fabric world!")
-    ModItems.registerItems()
-  }
 
   /** @return the identifier of [path] in this mod's namespace */
   //? if >=26.1 {

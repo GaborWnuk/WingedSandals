@@ -1,5 +1,6 @@
 package com.adilhanney.wingedsandals.datagen
 
+//? if fabric {
 import com.adilhanney.wingedsandals.item.ModItems
 //? if >=26.1 {
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
@@ -65,3 +66,4 @@ class ModRecipeProvider(output: FabricPackOutput, registriesFuture: CompletableF
   }
 }
 *///?}
+//?}

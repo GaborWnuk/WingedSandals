@@ -56,6 +56,8 @@ tasks {
 		filesMatching("assets/wingedsandals/equipment/winged_sandals.json") {
 			path = equipmentModelPath
 		}
+
+		exclude("META-INF/neoforge.mods.toml")
 	}
 
 	jar {

@@ -1,6 +1,7 @@
 package com.adilhanney.wingedsandals.item
 
 import com.adilhanney.wingedsandals.WingedSandals
+//? if fabric {
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
@@ -13,6 +14,15 @@ import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 //?}
+//?} else {
+/*import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import net.neoforged.neoforge.registries.DeferredItem
+import net.neoforged.neoforge.registries.DeferredRegister
+//? if >=26.1
+import java.util.function.Supplier
+*///?}
 import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
@@ -32,6 +42,7 @@ object ModItems {
     /*.durability(ArmorItem.Type.BOOTS.getDurability(7))
     *///?}
 
+  //? if fabric {
   val wingedSandals: Item = register("winged_sandals", ::WingedSandalsItem, itemProperties())
 
   private fun register(name: String, itemFactory: (Item.Properties) -> Item, properties: Item.Properties): Item {
@@ -62,4 +73,27 @@ object ModItems {
       }
     }
   }
+  //?} else {
+  /*private val ITEMS = DeferredRegister.createItems(WingedSandals.MOD_ID)
+
+  //? if >=26.1 {
+  val wingedSandals: DeferredItem<WingedSandalsItem> =
+    ITEMS.registerItem("winged_sandals", ::WingedSandalsItem, Supplier { itemProperties() })
+  //?} else {
+  /*val wingedSandals: DeferredItem<WingedSandalsItem> =
+    ITEMS.registerItem("winged_sandals", ::WingedSandalsItem, itemProperties())
+  *///?}
+
+  fun register(modEventBus: IEventBus) {
+    WingedSandals.logger.info("Registering Items for " + WingedSandals.MOD_ID)
+
+    ITEMS.register(modEventBus)
+
+    modEventBus.addListener<BuildCreativeModeTabContentsEvent> { event ->
+      if (event.tabKey == CreativeModeTabs.COMBAT) event.accept(wingedSandals)
+    }
+
+    NeoForge.EVENT_BUS.addListener(WingedSandalsItem::onBootsChanged)
+  }
+  *///?}
 }

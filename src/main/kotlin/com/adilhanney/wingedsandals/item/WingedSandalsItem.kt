@@ -14,6 +14,10 @@ import net.minecraft.world.level.Level
 *///?}
 //? if >=1.21.2
 import net.minecraft.world.item.equipment.ArmorType
+//? if neoforge {
+/*import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent
+*///?}
 
 //? if >=1.21.5 {
 class WingedSandalsItem(properties: Properties) : Item(properties.humanoidArmor(
@@ -47,6 +51,15 @@ class WingedSandalsItem(properties: Properties) : Item(properties.humanoidArmor(
   *///?}
 
   companion object {
+    //? if neoforge {
+    /*fun onBootsChanged(event: LivingEquipmentChangeEvent) {
+      val player = event.entity
+      if (player !is Player) return
+      if (event.slot != EquipmentSlot.FEET) return
+      setAllowFlying(player)
+    }
+    *///?}
+
     /** @return Whether the player would be able to fly in vanilla minecraft */
     private fun canNormallyFly(player: Player): Boolean {
       return player.isCreative || player.isSpectator
@@ -60,19 +73,39 @@ class WingedSandalsItem(properties: Properties) : Item(properties.humanoidArmor(
     }
 
     /** Sets the player's ability to fly based on whether they have the winged sandals equipped. */
+    //? if fabric {
     fun setAllowFlying(player: Player, isEquipped: Boolean) {
       val allowFlying = isEquipped || canNormallyFly(player)
       if (player.abilities.mayfly == allowFlying) return
 
+      logFlightChange(player, allowFlying)
+
+      player.abilities.mayfly = allowFlying
+      if (!allowFlying) player.abilities.flying = false
+      player.onUpdateAbilities()
+    }
+    //?} else {
+    /*fun setAllowFlying(player: Player, isEquipped: Boolean) {
+      val allowFlying = isEquipped || canNormallyFly(player)
+      val allowFlyingDouble = if (allowFlying) 1.0 else 0.0
+
+      val attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT) ?: return
+      if (attribute.baseValue == allowFlyingDouble) return
+
+      logFlightChange(player, allowFlying)
+
+      attribute.baseValue = allowFlyingDouble
+      if (!allowFlying) player.abilities.flying = false
+      player.onUpdateAbilities()
+    }
+    *///?}
+
+    private fun logFlightChange(player: Player, allowFlying: Boolean) {
       if (allowFlying) {
         WingedSandals.logger.info("${player.name.string} can now fly with their winged sandals!")
       } else {
         WingedSandals.logger.info("${player.name.string} can no longer fly!")
       }
-
-      player.abilities.mayfly = allowFlying
-      if (!allowFlying) player.abilities.flying = false
-      player.onUpdateAbilities()
     }
   }
 }

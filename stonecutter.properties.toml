@@ -39,7 +39,7 @@ mod.armor_texture = "assets/wingedsandals/textures/models/armor/winged_sandals_l
 mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 21
 
-["1.21.2"]
+["1.21.3"]
 mod.mc_label = "1.21.2-1.21.3"
 mod.mc_releases = ["1.21.2", "1.21.3"]
 mod.armor_texture = "assets/wingedsandals/textures/entity/equipment/humanoid/winged_sandals.png"
@@ -87,10 +87,10 @@ mod.mc_compat = ">=1.21 <1.21.2"
 deps.fabric_loader_min = "0.16.0"
 deps.fabric_api = "0.115.6+1.21.1"
 
-[fabric."1.21.2"]
+[fabric."1.21.3"]
 mod.mc_compat = ">=1.21.2 <1.21.4"
 deps.fabric_loader_min = "0.16.0"
-deps.fabric_api = "0.106.1+1.21.2"
+deps.fabric_api = "0.114.1+1.21.3"
 
 [fabric."1.21.4"]
 mod.mc_compat = ">=1.21.4 <1.21.5"
@@ -107,3 +107,39 @@ deps.fabric_api = "0.124.0+1.21.5"
 mod.mc_compat = "~26.1.2"
 deps.fabric_loader_min = "0.19.0"
 deps.fabric_api = "0.145.4+26.1.2"
+
+# NeoForge, per Minecraft version:
+# - mod.mc_compat / deps.neo_compat: Minecraft and NeoForge ranges in neoforge.mods.toml
+# - deps.neo_loader: check this on https://projects.neoforged.net/neoforged/neoforge
+# - deps.kotlin_forge: check this on https://github.com/thedarkcolour/KotlinForForge;
+#   it must bundle the Kotlin version this build compiles with
+
+[neoforge."1.21.1"]
+mod.mc_compat = "[1.21.0,1.21.1]"
+deps.neo_compat = "[21.1.100,)"
+deps.neo_loader = "21.1.174"
+deps.kotlin_forge = "5.12.0"
+
+[neoforge."1.21.3"]
+mod.mc_compat = "[1.21.2,1.21.3]"
+deps.neo_compat = "[21.3.56,)"
+deps.neo_loader = "21.3.76"
+deps.kotlin_forge = "5.12.0"
+
+[neoforge."1.21.4"]
+mod.mc_compat = "[1.21.4]"
+deps.neo_compat = "[21.4.121,)"
+deps.neo_loader = "21.4.137"
+deps.kotlin_forge = "5.12.0"
+
+[neoforge."1.21.5"]
+mod.mc_compat = "[1.21.5]"
+deps.neo_compat = "[21.5.74,)"
+deps.neo_loader = "21.5.75"
+deps.kotlin_forge = "5.12.0"
+
+[neoforge."26.1.2"]
+mod.mc_compat = "[26.1.2,26.2)"
+deps.neo_compat = "[26.1.2,26.2)"
+deps.neo_loader = "26.1.2.78"
+deps.kotlin_forge = "6.3.0"
