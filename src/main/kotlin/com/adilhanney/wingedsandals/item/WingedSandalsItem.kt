@@ -1,65 +1,68 @@
 package com.adilhanney.wingedsandals.item
 
 import com.adilhanney.wingedsandals.WingedSandals
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EquipmentSlot
-import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-//? if <1.21.5
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ItemStack
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+//? if >=1.21.5 {
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.Item
+//?} else {
+/*import net.minecraft.world.item.ArmorItem
+import net.minecraft.world.level.Level
+*///?}
 //? if >=1.21.2
-/*import net.minecraft.item.equipment.EquipmentType*/
-import net.minecraft.screen.slot.Slot
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.ClickType
-import net.minecraft.world.World
-
+import net.minecraft.world.item.equipment.ArmorType
 
 //? if >=1.21.5 {
-/*class WingedSandalsItem(settings: Settings): Item(settings.armor(
+class WingedSandalsItem(properties: Properties) : Item(properties.humanoidArmor(
   ModArmorMaterials.wingedSandalsMaterial,
-  EquipmentType.BOOTS,
+  ArmorType.BOOTS,
 )) {
-*///?} else {
-class WingedSandalsItem(settings: Settings) : ArmorItem (
+//?} else if >=1.21.2 {
+/*class WingedSandalsItem(properties: Properties) : ArmorItem(
   ModArmorMaterials.wingedSandalsMaterial,
-  /*? if >=1.21.2 {*/ /*EquipmentType.BOOTS *//*?} else {*/ Type.BOOTS /*?}*/,
-  settings,
+  ArmorType.BOOTS,
+  properties,
 ) {
-//?}
+*///?} else {
+/*class WingedSandalsItem(properties: Properties) : ArmorItem(
+  ModArmorMaterials.wingedSandalsMaterial,
+  Type.BOOTS,
+  properties,
+) {
+*///?}
 
   //? if >=1.21.5 {
-  /*override fun inventoryTick(stack: ItemStack?, world: ServerWorld?, entity: Entity?, slot: EquipmentSlot?) {
-    if (entity is PlayerEntity) setAllowFlying(entity)
-    super.inventoryTick(stack, world, entity, slot)
+  override fun inventoryTick(stack: ItemStack, level: ServerLevel, entity: Entity, slot: EquipmentSlot?) {
+    if (entity is Player) setAllowFlying(entity)
+    super.inventoryTick(stack, level, entity, slot)
   }
-  *///?} else {
-  override fun inventoryTick(stack: ItemStack?, world: World?, entity: Entity?, slot: Int, selected: Boolean) {
-    if (entity is PlayerEntity) setAllowFlying(entity)
-    super.inventoryTick(stack, world, entity, slot, selected)
+  //?} else {
+  /*override fun inventoryTick(stack: ItemStack, level: Level, entity: Entity, slotId: Int, isSelected: Boolean) {
+    if (entity is Player) setAllowFlying(entity)
+    super.inventoryTick(stack, level, entity, slotId, isSelected)
   }
-  //?}
+  *///?}
 
   companion object {
     /** @return Whether the player would be able to fly in vanilla minecraft */
-    private fun canNormallyFly(player: PlayerEntity): Boolean {
+    private fun canNormallyFly(player: Player): Boolean {
       return player.isCreative || player.isSpectator
     }
 
     /** Sets the player's ability to fly based on whether they have the winged sandals equipped. */
-    fun setAllowFlying(player: PlayerEntity) {
-      val itemStack = player.getEquippedStack(EquipmentSlot.FEET)
+    fun setAllowFlying(player: Player) {
+      val itemStack = player.getItemBySlot(EquipmentSlot.FEET)
       val isEquipped = itemStack.item is WingedSandalsItem
       setAllowFlying(player, isEquipped)
     }
 
     /** Sets the player's ability to fly based on whether they have the winged sandals equipped. */
-    fun setAllowFlying(player: PlayerEntity, isEquipped: Boolean) {
+    fun setAllowFlying(player: Player, isEquipped: Boolean) {
       val allowFlying = isEquipped || canNormallyFly(player)
-      if (player.abilities.allowFlying == allowFlying) return
+      if (player.abilities.mayfly == allowFlying) return
 
       if (allowFlying) {
         WingedSandals.logger.info("${player.name.string} can now fly with their winged sandals!")
@@ -67,9 +70,9 @@ class WingedSandalsItem(settings: Settings) : ArmorItem (
         WingedSandals.logger.info("${player.name.string} can no longer fly!")
       }
 
-      player.abilities.allowFlying = allowFlying
+      player.abilities.mayfly = allowFlying
       if (!allowFlying) player.abilities.flying = false
-      player.sendAbilitiesUpdate()
+      player.onUpdateAbilities()
     }
   }
 }
