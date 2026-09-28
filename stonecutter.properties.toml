@@ -14,41 +14,57 @@ deps.fabric_kotlin = "1.13.12+kotlin.2.4.0"
 # Per Minecraft version:
 # - mod.mc_label: range shown in the jar file name
 # - mod.mc_releases: releases to be marked compatible on Modrinth/Curseforge
+# - mod.armor_texture / mod.equipment_model: where this version looks for the
+#   armor texture and equipment model (the sources live at the 26.1 paths)
 # - deps.java: Java version required by this Minecraft version
 
 ["1.20.1"]
 mod.mc_label = "1.20-1.20.4"
 mod.mc_releases = ["1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4"]
+mod.armor_texture = "assets/minecraft/textures/models/armor/winged_sandals_layer_1.png"
+mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 17
 
 ["1.20.5"]
 mod.mc_label = "1.20.5-1.20.6"
 mod.mc_releases = ["1.20.5", "1.20.6"]
+mod.armor_texture = "assets/wingedsandals/textures/models/armor/winged_sandals_layer_1.png"
+mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 21
 
 ["1.21.1"]
 mod.mc_label = "1.21-1.21.1"
 mod.mc_releases = ["1.21", "1.21.1"]
+mod.armor_texture = "assets/wingedsandals/textures/models/armor/winged_sandals_layer_1.png"
+mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 21
 
 ["1.21.2"]
 mod.mc_label = "1.21.2-1.21.3"
 mod.mc_releases = ["1.21.2", "1.21.3"]
+mod.armor_texture = "assets/wingedsandals/textures/entity/equipment/humanoid/winged_sandals.png"
+mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 21
 
 ["1.21.4"]
 mod.mc_label = "1.21.4"
 mod.mc_releases = ["1.21.4"]
+mod.armor_texture = "assets/wingedsandals/textures/entity/equipment/humanoid/winged_sandals.png"
+mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 21
 
 ["1.21.5"]
 mod.mc_label = "1.21.5"
 mod.mc_releases = ["1.21.5"]
+mod.armor_texture = "assets/wingedsandals/textures/entity/equipment/humanoid/winged_sandals.png"
+mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 21
 
 ["26.1.2"]
 mod.mc_label = "26.1.2"
 mod.mc_releases = ["26.1.2"]
+mod.armor_texture = "assets/wingedsandals/textures/entity/equipment/humanoid/winged_sandals.png"
+mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
 deps.java = 25
 
 # Fabric, per Minecraft version:

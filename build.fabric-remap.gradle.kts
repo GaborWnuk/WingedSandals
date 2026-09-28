@@ -9,6 +9,8 @@ val javaVersion = JavaVersion.toVersion(property("deps.java")!!)
 val fabricApiVersion: String = sc.properties["deps.fabric_api"]
 val mcVersionRangeForFabric: String = sc.properties["mod.mc_compat"]
 val fabricLoaderMin: String = sc.properties["deps.fabric_loader_min"]
+val armorTexturePath: String = sc.properties["mod.armor_texture"]
+val equipmentModelPath: String = sc.properties["mod.equipment_model"]
 
 version = "${property("mod.version")}+${property("mod.mc_label")}"
 
@@ -36,6 +38,8 @@ tasks {
 		inputs.property("minecraftVersionRange", mcVersionRangeForFabric)
 		inputs.property("fabricLoaderMin", fabricLoaderMin)
 		inputs.property("version", project.version)
+		inputs.property("armorTexturePath", armorTexturePath)
+		inputs.property("equipmentModelPath", equipmentModelPath)
 
 		filesMatching("fabric.mod.json") {
 			expand(mapOf(
@@ -44,6 +48,15 @@ tasks {
 				"fabricLoaderMin" to inputs.properties["fabricLoaderMin"],
 				"version" to inputs.properties["version"],
 			))
+		}
+
+		// The sources keep the armor assets at their 26.1 paths; move them to
+		// wherever this Minecraft version looks for them
+		filesMatching("assets/wingedsandals/textures/entity/equipment/humanoid/winged_sandals.png") {
+			path = armorTexturePath
+		}
+		filesMatching("assets/wingedsandals/equipment/winged_sandals.json") {
+			path = equipmentModelPath
 		}
 	}
 
