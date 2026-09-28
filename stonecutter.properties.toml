@@ -46,6 +46,11 @@ mod.mc_label = "1.21.5"
 mod.mc_releases = ["1.21.5"]
 deps.java = 21
 
+["26.1.2"]
+mod.mc_label = "26.1.2"
+mod.mc_releases = ["26.1.2"]
+deps.java = 25
+
 # Fabric, per Minecraft version:
 # - mod.mc_compat: compatibility range in fabric.mod.json
 # - deps.fabric_loader_min: oldest Fabric Loader the jar accepts
@@ -80,3 +85,9 @@ deps.fabric_api = "0.119.2+1.21.4"
 mod.mc_compat = ">=1.21.5 <1.22"
 deps.fabric_loader_min = "0.16.0"
 deps.fabric_api = "0.124.0+1.21.5"
+
+[fabric."26.1.2"]
+# ~26.1.2 means >=26.1.2 <26.2
+mod.mc_compat = "~26.1.2"
+deps.fabric_loader_min = "0.19.0"
+deps.fabric_api = "0.145.4+26.1.2"

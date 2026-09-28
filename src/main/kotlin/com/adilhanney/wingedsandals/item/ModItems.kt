@@ -2,9 +2,13 @@ package com.adilhanney.wingedsandals.item
 
 import com.adilhanney.wingedsandals.WingedSandals
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
+//? if >=26.1 {
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
+//?} else {
+/*import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
+*///?}
 //? if >=1.21.2 {
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -42,9 +46,15 @@ object ModItems {
   fun registerItems() {
     WingedSandals.logger.info("Registering Items for " + WingedSandals.MOD_ID)
 
-    ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register { entries ->
+    //? if >=26.1 {
+    CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register { output ->
+      output.accept(wingedSandals)
+    }
+    //?} else {
+    /*ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register { entries ->
       entries.accept(wingedSandals)
     }
+    *///?}
 
     ServerTickEvents.END_SERVER_TICK.register {
       for (player in it.playerList.players) {

@@ -1,7 +1,11 @@
 package com.adilhanney.wingedsandals.datagen
 
 import com.adilhanney.wingedsandals.item.ModItems
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
+//? if >=26.1 {
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
+//?} else {
+/*import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput as FabricPackOutput
+*///?}
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.world.item.Items
@@ -20,7 +24,7 @@ import net.minecraft.data.recipes.RecipeProvider
 *///?}
 
 //? if >=1.21.2 {
-class ModRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
+class ModRecipeProvider(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
   FabricRecipeProvider(output, registriesFuture) {
 
   override fun createRecipeProvider(registries: HolderLookup.Provider, exporter: RecipeOutput): RecipeProvider {
@@ -38,7 +42,7 @@ class ModRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableF
   override fun getName(): String = "WingedSandalsRecipeProvider"
 }
 //?} else if >=1.20.5 {
-/*class ModRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
+/*class ModRecipeProvider(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
   FabricRecipeProvider(output, registriesFuture) {
 
   override fun buildRecipes(exporter: RecipeOutput) {
@@ -50,7 +54,7 @@ class ModRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableF
   }
 }
 *///?} else {
-/*class ModRecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
+/*class ModRecipeProvider(output: FabricPackOutput) : FabricRecipeProvider(output) {
 
   override fun buildRecipes(exporter: Consumer<FinishedRecipe>) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ModItems.wingedSandals)
