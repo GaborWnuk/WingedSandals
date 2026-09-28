@@ -43,7 +43,7 @@ deps.java = 21
 mod.mc_label = "1.21.2-1.21.3"
 mod.mc_releases = ["1.21.2", "1.21.3"]
 mod.armor_texture = "assets/wingedsandals/textures/entity/equipment/humanoid/winged_sandals.png"
-mod.equipment_model = "assets/wingedsandals/equipment/winged_sandals.json"
+mod.equipment_model = "assets/wingedsandals/models/equipment/winged_sandals.json"
 deps.java = 21
 
 ["1.21.4"]
