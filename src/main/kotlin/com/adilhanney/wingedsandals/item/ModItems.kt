@@ -14,16 +14,17 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 //? if >=1.21.2 {
 import net.minecraft.world.item.equipment.ArmorType
-//?} else if >=1.21 {
+//?} else if >=1.20.5 {
 /*import net.minecraft.world.item.ArmorItem
 *///?}
 
 object ModItems {
+  // Before 1.20.5 the durability comes from the armor material
   private fun itemProperties() = Item.Properties()
     .rarity(Rarity.UNCOMMON)
     //? if >=1.21.2 {
     .durability(ArmorType.BOOTS.getDurability(7))
-    //?} else if >=1.21 {
+    //?} else if >=1.20.5 {
     /*.durability(ArmorItem.Type.BOOTS.getDurability(7))
     *///?}
 
