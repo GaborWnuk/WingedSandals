@@ -1,13 +1,15 @@
 modLoader = "kotlinforforge"
 loaderVersion = "[${kotlinForForgeVersion},)"
 license = "MIT"
+issueTrackerURL = "https://github.com/GaborWnuk/WingedSandals/issues"
 
 [[mods]]
 modId = "wingedsandals"
 version = "${version}"
 displayName = "WingedSandals"
+displayURL = "https://github.com/GaborWnuk/WingedSandals"
 logoFile = "assets/wingedsandals/icon.png"
-authors = "adil192"
+authors = "adil192, GaborWnuk"
 description = '''Special boots that give you creative-style flight'''
 
 [[dependencies.wingedsandals]]
